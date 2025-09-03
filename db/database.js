@@ -13,17 +13,23 @@ let user_database = new sqlite3.Database(user_database_path, (err)=>{
 });
 
 user_database.serialize(()=>{
-    `CREATE TABLE IF NOT EXISTS user_database (
+    user_database.run(`CREATE TABLE IF NOT EXISTS user_database (
     userID INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE,
-    password TEXT)`
-}
+    password TEXT)`, (err) => {
+        if(err) {
+            console.error('Error creating table:', err);
+        } else {
+            console.log('Table created or already exists');
+        }
+    });
+});
 
 //Query add edit delete from rows
 //Returns the new row after the additions, edits, deletions
-function runQuery(sql, params[]){
+function runQuery(sql, params){
     return new Promise((resolve,reject)=>{
-        user_database.run(sql,params, fuction (err) {
+        user_database.run(sql,params, function (err) {
             if(err){
                 reject(err);
             }
@@ -35,9 +41,9 @@ function runQuery(sql, params[]){
 }
 
 //Query a specific row
-function addQuery(sql,params[]){
+function getQuery(sql,params){
     return new Promise((resolve,reject) =>{
-        user_database.add(sql,params, (err) =>{
+        user_database.get(sql,params, (err, row) =>{
             if(err){
                 reject(err);
             }
@@ -49,11 +55,11 @@ function addQuery(sql,params[]){
 }
 
 //Query multiple rows
-function allQuery(sql,params[]){
+function allQuery(sql,params){
     return new Promise((resolve,reject) =>{
-        user_database.all(sql,params,(err)=>{
+        user_database.all(sql,params,(err, rows)=>{
             if(err){
-                reject(row);
+                reject(err);
             }
             else{
                 resolve(rows)
@@ -65,6 +71,6 @@ function allQuery(sql,params[]){
 module.exports = {
     user_database,
     runQuery,
-    addQuery,
+    getQuery,
     allQuery
 }

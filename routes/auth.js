@@ -3,9 +3,9 @@ const bcrypt = require('bcrypt')
 
 const {runQuery, getQuery} = require('../db/database.js');
 
-router = express.Router();
+const router = express.Router();
 
-router.post('\register', async (req,res) =>{
+router.post('/register', async (req,res) =>{
     const{username, password} = req.body;
 
     if(!username||!password){
@@ -19,19 +19,19 @@ router.post('\register', async (req,res) =>{
             return res.status(400).json({error: 'Username Already Exists'});
         }
 
-        const hashedPassword = bcrypt.hash(password,10);
+        const hashedPassword = await bcrypt.hash(password,10);
 
         const result = await runQuery('INSERT INTO user_database (username, password) VALUES (?,?)',[username,hashedPassword]);
 
-        res.json({message: 'User successfully added', userId:result.id});
+        res.json({message: 'User successfully added', userId:result.id, userUsername:username});
     }
     catch(err){
-        console.log('registration failed')
-        return res.status(500).json({error: 'User already exists'});
+        console.log('registration failed', err)
+        return res.status(500).json({error: 'Registration failed'});
     }
 });
 
-router.post('/signin',async (res,req) =>{
+router.post('/signin',async (req,res) =>{
     const{username, password} = req.body;
 
     if(!username||!password){
@@ -47,16 +47,16 @@ router.post('/signin',async (res,req) =>{
             return res.status(400).json({error: 'Username does not exist'});
         }
 
-        const validPassword = bcrypt.compare(user.password,password);
+        const validPassword = await bcrypt.compare(password, user.password);
         if(!validPassword){
             return res.status(400).json({error:'Invalid Password'})
         } 
 
-        res.json({message:'Login Successful', userId: user.id, userUsername:user.username});
+        res.json({message:'Login Successful', userId: user.userID, userUsername:user.username});
     }
-    catch{
-        console.log("Internal server error")
-        res.status(400).json({error: 'Internal Server Error'})
+    catch(err){
+        console.log("Internal server error", err)
+        res.status(500).json({error: 'Internal Server Error'})
     }
 });
 

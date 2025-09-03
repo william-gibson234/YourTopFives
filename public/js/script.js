@@ -12,27 +12,57 @@ async function onEnterButtonClicked(){
     const username = usernameInput.value.trim()
     const password = passwordInput.value.trim()
 
-    clearTextInputs();
-
-    try{
-        const response = await fetch(
-            '/api/auth/signin', {
+    if(username && password){
+        try{
+            const response = await fetch(
+                '/api/auth/signin', {
                 method: 'POST',
                 headers: {'Content-Type':'application/json'},
                 body: JSON.stringify({username,password})
             });
+        const data = await response.json();
+        clearTextInputs();
+
+        if(response.ok){
+            currentUsername = data.userUsername;
+            window.location.href = '/yourtopfives.html';
+        }
+        else{
+            console.log('Sign in failed',data.error);
+        }
     }
     catch(err){
         console.log('Sign in failed', err);
     }
-
-
+    }
 }
 async function onCreateAccountButtonClicked(){
     const username = usernameInput.value.trim()
     const password = passwordInput.value.trim()
 
-    clearTextInputs();
+    if(username && password){
+        try{
+            const response = await fetch(
+                '/api/auth/register', {
+                    method: 'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body: JSON.stringify({username,password})
+                }
+            );
+            const data = await response.json();
+            if(response.ok){
+                currentUsername = data.username;
+                window.location.href = '/yourtopfives.html';
+            }
+            else{
+                console.log('Sign in failed',data.error);
+            }
+        }
+        catch(err){
+            console.log('Registration failed',err);
+        }
+        clearTextInputs();
+    }
     
 }
 
