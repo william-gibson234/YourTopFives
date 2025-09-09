@@ -25,10 +25,11 @@ async function onEnterButtonClicked(){
 
         if(response.ok){
             currentUsername = data.userUsername;
+            alert('Sign in successful!');
             window.location.href = '/yourtopfives.html';
         }
         else{
-            console.log('Sign in failed',data.error);
+            alert(data.error || 'Sign in failed');
         }
     }
     catch(err){
@@ -51,11 +52,12 @@ async function onCreateAccountButtonClicked(){
             );
             const data = await response.json();
             if(response.ok){
-                currentUsername = data.username;
+                currentUsername = data.userUsername;
+                alert('Account created successfully!');
                 window.location.href = '/yourtopfives.html';
             }
             else{
-                console.log('Sign in failed',data.error);
+                alert(data.error || 'Account creation failed');
             }
         }
         catch(err){
