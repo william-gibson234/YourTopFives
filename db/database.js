@@ -38,11 +38,21 @@ topic_database.serialize(()=>{
     topic_database.run(`CREATE TABLE IF NOT EXISTS topic_database (
     topicID INTEGER PRIMARY KEY AUTOINCREMENT,
     topicTitle TEXT UNIQUE,
+    topicDescription TEXT,
     user_id INTEGER)`, (err) => {
         if(err) {
             console.error('Error creating topic database table:', err);
         } else {
             console.log('Topic Table created or already exists');
+        }
+    });
+    
+    // Add topicDescription column if it doesn't exist (for existing databases)
+    topic_database.run(`ALTER TABLE topic_database ADD COLUMN topicDescription TEXT`, (err) => {
+        if(err && !err.message.includes('duplicate column name')) {
+            console.error('Error adding topicDescription column:', err);
+        } else if (!err) {
+            console.log('topicDescription column added successfully');
         }
     });
 });
