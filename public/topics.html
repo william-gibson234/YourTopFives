@@ -2,19 +2,14 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>YourTopFives</title>
+        <title>Topics</title>
         <link rel = 'stylesheet' type = 'text/css' href = 'css/stylesheet.css'>
         <script src = "js/script.js" defer></script>
     </head>
-    <body class = 'homepage'>
+    <body class = 'topics'>
         <header>
             <div id = "title-container">
-                <h1 id = "title">YourTopFives</h1>
-            </div>
-            <div id = "nav-container">
-                <a class = "button">About Us</a>
-                <a class = "button">FAQs</a>
-                <a class = "button">Settings</a>
+                <h1 id = "title">Topics</h1>
             </div>
             <a href = "usersignin.html">
             <div id = "account-container">
@@ -23,8 +18,17 @@
                 <a class = "navigation-button" id = "sign-out-button">Sign Out</a>
             </div></a>
         </header>
-        <section id ="page-naviation">
-            <a class = "navigation-button" id = "topic-navigation-button">View All Topics</a>
-        </section>
+         <div id = "create-topic-button-container">
+             <a class = "button" href = "create-topic.html">Create a Topic</a>
+         </div>
+         <div id = "topic-container">
+            <div id = "topic-template">
+                <h3 id = "topic-title">
+                Topic Title
+                </h3>
+                <p>AccountName</p>
+            <p id = "topic-description">Topic Description</p>
+        </div>
+        </div>
     </body>
 </html>

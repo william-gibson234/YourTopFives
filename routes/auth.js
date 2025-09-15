@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt')
 
-const {runQuery, getQuery} = require('../db/database.js');
+const {runUserQuery, getUserQuery} = require('../db/database.js');
 
 const router = express.Router();
 
@@ -14,14 +14,14 @@ router.post('/register', async (req,res) =>{
 
     try{
         //Query database to see if username already exists
-        const existingUser = await getQuery('SELECT * FROM user_database WHERE username = ?',[username])
+        const existingUser = await getUserQuery('SELECT * FROM user_database WHERE username = ?',[username])
         if(existingUser){
             return res.status(400).json({error: 'Username Already Exists'});
         }
 
         const hashedPassword = await bcrypt.hash(password,10);
 
-        const result = await runQuery('INSERT INTO user_database (username, password) VALUES (?,?)',[username,hashedPassword]);
+        const result = await runUserQuery('INSERT INTO user_database (username, password) VALUES (?,?)',[username,hashedPassword]);
 
         res.json({message: 'User successfully added', userId:result.id, userUsername:username});
     }
@@ -40,7 +40,7 @@ router.post('/signin',async (req,res) =>{
 
     //Query database to see if username exists
     try{
-        const user = await getQuery('SELECT * FROM user_database WHERE username = ?',[username]);
+        const user = await getUserQuery('SELECT * FROM user_database WHERE username = ?',[username]);
 
         if(!user){
             //username does not exist

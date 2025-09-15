@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Create Topic - YourTopFives</title>
+        <link rel = 'stylesheet' type = 'text/css' href = 'css/stylesheet.css'>
+        <script src = "js/script.js" defer></script>
+    </head>
+    <body class = 'create-topic'>
+        <header>
+            <div id = "title-container">
+                <h1 id = "title">Create New Topic</h1>
+            </div>
+            <div id = "nav-container">
+                <a class = "button" href = "topics.html">Back to Topics</a>
+            </div>
+        </header>
+        
+        <section id = "create-topic-form-container">
+            <form id = "create-topic-form">
+                <div class = "form-group">
+                    <label for = "topic-name">Topic Name</label>
+                    <input type = "text" id = "topic-name" name = "topicName" required 
+                           placeholder = "Enter topic name (e.g., Best Movies of 2024)">
+                </div>
+                
+                <div class = "form-group">
+                    <label for = "topic-description">Topic Description</label>
+                    <textarea id = "topic-description" name = "topicDescription" required 
+                              placeholder = "Describe what this topic is about..."></textarea>
+                </div>
+                
+                <div class = "form-actions">
+                    <button type = "submit" class = "button">Create Topic</button>
+                    <a href = "topics.html" class = "button">Cancel</a>
+                </div>
+            </form>
+        </section>
+    </body>
+</html>
