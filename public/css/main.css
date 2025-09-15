@@ -1,0 +1,8 @@
+/* Main CSS file that imports all component styles */
+@import url('base.css');
+@import url('header.css');
+@import url('buttons.css');
+@import url('topics.css');
+@import url('forms.css');
+@import url('posts.css');
+@import url('responsive.css');

@@ -1,0 +1,38 @@
+/* Topic component styles */
+#topic-template{
+    flex: 0 0 300px;
+    border: 3px white solid;
+    padding: 5px;
+    margin: 15px;
+    display: block;
+    background-color: transparent;
+    min-height: 150px;
+    width: 80%;
+    max-width: 300px;
+    visibility: hidden;
+    opacity: 1;
+}
+
+#topic-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+/*Topic Template*/
+#topic-title{
+    margin:5px;
+    padding: 0px;
+}
+
+#create-topic-button-container{
+    margin: 20px;
+}
+
+/* Topic Detail Page Specific Styles */
+.topic-detail #topic-title {
+    font-size: clamp(18px, 4vw, 35px); /* Smaller font size for topic detail page */
+    padding: 5px;
+    margin: 50px 10 px;
+}

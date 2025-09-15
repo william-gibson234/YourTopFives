@@ -1,0 +1,19 @@
+/* Post component styles */
+#post-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+#post-template{
+    flex: 0 0 300px;
+    border: 3px white solid;
+    padding: 5px;
+    margin: 15px;
+    display: block;
+    background-color: transparent;
+    min-height: 150px;
+    width: 80%;
+    max-width: 300px;
+}
