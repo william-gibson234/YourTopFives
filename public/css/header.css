@@ -3,14 +3,16 @@ header{
     display: flex;
     align-items: center;
     border-bottom: 3px white solid;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-between;
     padding: 0 10px 15px 10px;
 }
 
+/* Title styles - shared font-size and overflow handling */
 #title{
     line-height:1;
-    margin:0px;
+    margin: 0px;
+    font-size: clamp(24px, 5vw, 100px); /* Responsive font size */
     overflow: hidden; /* Hide overflow text */
     text-overflow: ellipsis; /* Show ... for overflow text */
     white-space: nowrap; /* Prevent text wrapping */
@@ -20,14 +22,10 @@ header{
     box-sizing: border-box; /* Include padding and border in width calculation */
 }
 
+/* Title container - simplified since it only contains one title element */
 #title-container{
     padding: 0px 10px;
-    font-size: clamp(24px, 5vw, 50px); /* Responsive font size */
-    display: flex;
-    align-items: flex-start;
     max-width: 60%; /* Restrict title container to maximum 60% of header width */
-    flex-shrink: 1; /* Allow it to shrink if needed */
-    overflow: hidden; /* Hide any overflow from the container */
 }
 
 #nav-container{

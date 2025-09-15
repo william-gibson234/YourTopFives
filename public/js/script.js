@@ -94,9 +94,24 @@ function onSignOutButtonClicked(){
     updateAccountText();
     updateSignOutButton();
 }
-function onAccountButtonClicked(){
+async function onAccountButtonClicked(){
     if(currentUsername){
         //set location to userScreen
+        alert('Fetching user data');
+        const response = await fetch(`/api/auth/user?username = ${currentUsername}`,{
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+        });
+        const data  = await response.json();
+        alert(`Data: ${data}`);
+        const userId = data.user.userId;
+        const username = data.user.username;
+        alert(`User ID: ${userId}, Username: ${username}`);
+        if(response.ok){
+            alert(`Setting location to account-detail.html?userId=${userId}`);
+            window.location.href = `/acount-detail.html?userId=${userId}`;
+        }
+
     }
     else{
         window.location.href = '/usersignin.html';

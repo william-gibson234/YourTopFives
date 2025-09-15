@@ -5,6 +5,26 @@ const {runUserQuery, getUserQuery} = require('../db/database.js');
 
 const router = express.Router();
 
+router.get('/user/:username',async (req,res) =>{
+    alert('Fetching user data2');
+ const {username} = req.params;
+ if(!username){
+    return res.status(400).json({error:'Username is required'});
+ }
+ try{
+    const user = await getUserQuery('SELECT * FROM user_database WHERE username = ?',[username]);
+    alert(`User: ${user}`);
+    if(!user){
+        return res.status(400).json({error:'User not found'});
+    }
+    res.json({user});
+ }
+ catch(err){
+    console.log('Internal server error', err);
+    res.status(500).json({error:'Internal Server Error'});
+ }
+}); 
+
 router.post('/register', async (req,res) =>{
     const{username, password} = req.body;
 
