@@ -14,6 +14,12 @@
             <div id = "nav-container">
                 <a class = "button" href = "topics.html">Back to Topics</a>
             </div>
+            <a href = "usersignin.html">
+            <div id = "account-container">
+                <img src = "/Images/account-icon.jpg" id = "account-button">
+                <a id = "account-text"></a>
+                <a class = "navigation-button" id = "sign-out-button">Sign Out</a>
+            </div></a>
         </header>
         
         <section id = "create-topic-form-container">
@@ -21,17 +27,17 @@
                 <div class = "form-group">
                     <label for = "topic-name">Topic Name</label>
                     <input type = "text" id = "topic-name" name = "topicName" required 
-                           placeholder = "Enter topic name (e.g., Best Movies of 2024)">
+                           placeholder = "Enter topic name">
                 </div>
                 
                 <div class = "form-group">
                     <label for = "topic-description">Topic Description</label>
                     <textarea id = "topic-description" name = "topicDescription" required 
-                              placeholder = "Describe what this topic is about..."></textarea>
+                              placeholder = "Description"></textarea>
                 </div>
                 
                 <div class = "form-actions">
-                    <button type = "submit" class = "button">Create Topic</button>
+                    <button type = "submit" class = "button" id = "create-topic-button">Create Topic</button>
                     <a href = "topics.html" class = "button">Cancel</a>
                 </div>
             </form>
