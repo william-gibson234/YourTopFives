@@ -49,7 +49,7 @@ function setupUserInterface() {
     const createTopicButton = document.getElementById("create-topic-button");
     
     if (signOutButton) {
-        signOutButton.addEventListener("click", window.userModule.onSignOutButtonClicked);
+        signOutButton.addEventListener("click", window.authModule.onSignOutButtonClicked);
     }
     if (accountButton) {
         accountButton.addEventListener("click", window.userModule.onAccountButtonClicked);
@@ -71,7 +71,8 @@ function setupPageSpecificFunctionality() {
     // Update account text for pages with account container
     if (body.classList.contains('homepage') || 
         body.classList.contains('topics') || 
-        body.classList.contains('create-topic')) {
+        body.classList.contains('create-topic') ||
+        (body.classList.contains('topic-detail') && window.location.pathname.includes('account-detail'))) {
         window.userModule.updateAccountText();
         window.userModule.updateSignOutButton();
     }
@@ -87,10 +88,10 @@ function setupPageSpecificFunctionality() {
     }
     
     if (body.classList.contains('topic-detail') && window.location.pathname.includes('account-detail')) {
-        const userId = parseInt(window.location.search.split('=')[1]);
+        const user_id = parseInt(window.location.search.split('=')[1]);
         const currentUsername = window.authModule ? window.authModule.currentUsername() : null;
         if (currentUsername) {
-            window.userModule.displayUserDetailPage(userId, currentUsername);
+            window.userModule.displayUserDetailPage(user_id, currentUsername);
         }
     }
 }
@@ -98,7 +99,7 @@ function setupPageSpecificFunctionality() {
 // Make functions available globally for backward compatibility
 window.onEnterButtonClicked = window.authModule.onEnterButtonClicked;
 window.onCreateAccountButtonClicked = window.authModule.onCreateAccountButtonClicked;
-window.onSignOutButtonClicked = window.userModule.onSignOutButtonClicked;
+window.onSignOutButtonClicked = window.authModule.onSignOutButtonClicked;
 window.onAccountButtonClicked = window.userModule.onAccountButtonClicked;
 window.onTopicsButtonClicked = window.userModule.onTopicsButtonClicked;
 window.onCreateTopicButtonClicked = window.topicsModule.onCreateTopicButtonClicked;

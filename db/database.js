@@ -3,6 +3,7 @@ const path = require('path');
 
 const user_database_path = path.join(__dirname,'user_database.db');
 const topic_data_path = path.join(__dirname,'topic_database.db');
+const post_database_path = path.join(__dirname,'post_database.db');
 
 let user_database = new sqlite3.Database(user_database_path, (err)=>{
     if(err){
@@ -21,9 +22,25 @@ let topic_database = new sqlite3.Database(topic_data_path, (err)=>{
         console.log('Valid TopicDatabase');
     }
 });
+
+let post_database = new sqlite3.Database(post_database_path,(err)=>{
+if(err){
+    console.error('Invalid post database path')
+}
+else{
+    console.log('Valid post database')
+}
+});
 user_database.serialize(()=>{
+    user_database.run(`ALTER TABLE user_database RENAME COLUMN userID TO user_id;`, (err) => {
+        if(err && !err.message.includes('no such column')) {
+            console.error('Error renaming userID column:', err);
+        } else if (!err) {
+            console.log('Successfully renamed userID to user_id');
+        }
+    });
     user_database.run(`CREATE TABLE IF NOT EXISTS user_database (
-    userID INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE,
     password TEXT)`, (err) => {
         if(err) {
@@ -56,7 +73,20 @@ topic_database.serialize(()=>{
         }
     });
 });
-
+post_database.serialize(()=>{
+    post_database.run(`CREATE TABLE IF NOT EXISTS post_database (
+    postID INTEGER PRIMARY KEY AUTOINCREMENT,
+    postContent TEXT,
+    topic_id INTEGER,
+    user_id INTEGER)`, (err)=>{
+        if(err){
+            console.error('Error creating post database table:', err);
+        }
+        else{
+            console.log('Post Table created or already exists');
+        }
+    });    
+});
 //USER DATABASE QUERY FUNCTIONS
 //Query add edit delete from rows - USER DATABASE
 function runUserQuery(sql, params){

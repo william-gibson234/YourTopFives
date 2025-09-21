@@ -19,7 +19,7 @@ router.post('/create', async (req, res) => {
         }
 
         // Get user ID from username
-        const user = await getUserQuery('SELECT userID FROM user_database WHERE username = ?', [createdBy]);
+        const user = await getUserQuery('SELECT user_id FROM user_database WHERE username = ?', [createdBy]);
         if (!user) {
             return res.status(400).json({ error: 'User not found' });
         }
@@ -27,7 +27,7 @@ router.post('/create', async (req, res) => {
         // Insert new topic
         const result = await runTopicQuery(
             'INSERT INTO topic_database (topicTitle, topicDescription, user_id) VALUES (?, ?, ?)',
-            [name, description, user.userID]
+            [name, description, user.user_id]
         );
 
         res.json({ 
@@ -49,7 +49,7 @@ router.get('/all', async (req, res) => {
         // Get usernames for each topic
         const topicsWithUsernames = await Promise.all(
             topics.map(async (topic) => {
-                const user = await getUserQuery('SELECT username FROM user_database WHERE userID = ?', [topic.user_id]);
+                const user = await getUserQuery('SELECT username FROM user_database WHERE user_id = ?', [topic.user_id]);
                 return {
                     ...topic,
                     createdBy: user ? user.username : 'Unknown User'
@@ -70,13 +70,13 @@ router.get('/user/:username', async (req, res) => {
 
     try {
         // First get the user ID
-        const user = await getUserQuery('SELECT userID FROM user_database WHERE username = ?', [username]);
+        const user = await getUserQuery('SELECT user_id FROM user_database WHERE username = ?', [username]);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
         
         // Then get topics for that user
-        const topics = await getAllTopicQuery('SELECT * FROM topic_database WHERE user_id = ? ORDER BY topicID DESC', [user.userID]);
+        const topics = await getAllTopicQuery('SELECT * FROM topic_database WHERE user_id = ? ORDER BY topicID DESC', [user.user_id]);
         
         // Add username to each topic
         const topicsWithUsernames = topics.map(topic => ({
@@ -103,7 +103,7 @@ router.get('/:id', async (req, res) => {
         }
         
         // Get username for the topic
-        const user = await getUserQuery('SELECT username FROM user_database WHERE userID = ?', [topic.user_id]);
+        const user = await getUserQuery('SELECT username FROM user_database WHERE user_id = ?', [topic.user_id]);
         
         const topicWithUsername = {
             ...topic,
@@ -135,9 +135,9 @@ router.put('/:id', async (req, res) => {
         }
         
         // Get user ID from username
-        const user = await getUserQuery('SELECT userID FROM user_database WHERE username = ?', [username]);
+        const user = await getUserQuery('SELECT user_id FROM user_database WHERE username = ?', [username]);
         
-        if (!user || user.userID !== topic.user_id) {
+        if (!user || user.user_id !== topic.user_id) {
             return res.status(403).json({ error: 'You can only edit your own topics' });
         }
 
@@ -168,9 +168,9 @@ router.delete('/:id', async (req, res) => {
         }
         
         // Get user ID from username
-        const user = await getUserQuery('SELECT userID FROM user_database WHERE username = ?', [username]);
+        const user = await getUserQuery('SELECT user_id FROM user_database WHERE username = ?', [username]);
         
-        if (!user || user.userID !== topic.user_id) {
+        if (!user || user.user_id !== topic.user_id) {
             return res.status(403).json({ error: 'You can only delete your own topics' });
         }
 

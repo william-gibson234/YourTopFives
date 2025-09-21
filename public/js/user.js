@@ -21,12 +21,12 @@ async function onAccountButtonClicked() {
         });
         const data = await response.json();
         //alert(`Data: ${data}`);
-        const userId = data.user.userID;
+        const user_id = data.user.user_id;
         const username = data.user.username;
-        //alert(`User ID: ${userId}, Username: ${username}`);
+        //alert(`User ID: ${user_id}, Username: ${username}`);
         if (response.ok) {
-            //alert(`Setting location to account-detail.html?userId=${userId}`);
-            window.location.href = `/account-detail.html?userId=${userId}`;
+            //alert(`Setting location to account-detail.html?user_id=${user_id}`);
+            window.location.href = `/account-detail.html?user_id=${user_id}`;
         }
     } else {
         window.location.href = '/usersignin.html';
@@ -63,9 +63,9 @@ function updateAccountText() {
         }
     }
 }
-function displayUserDetailPage(userId, username){
+function displayUserDetailPage(user_id, username){
     const titleElement = document.getElementById('title');
-    console.log(`User ID: ${userId}, Username: ${username}`);
+    console.log(`User ID: ${user_id}, Username: ${username}`);
     console.log(`Title Element: ${titleElement.textContent}`);
     if (titleElement) {
         titleElement.textContent = username;

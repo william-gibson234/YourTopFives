@@ -67,8 +67,8 @@ async function onCreateAccountButtonClicked() {
 function onSignOutButtonClicked() {
     localStorage.removeItem('currentUsername');
     currentUsername = null;
-    updateAccountText();
-    updateSignOutButton();
+    window.userModule.updateAccountText();
+    window.userModule.updateSignOutButton();
 }
 
 // Utility function for clearing inputs

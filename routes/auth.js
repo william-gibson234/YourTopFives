@@ -44,7 +44,7 @@ router.post('/register', async (req,res) =>{
 
         const result = await runUserQuery('INSERT INTO user_database (username, password) VALUES (?,?)',[username,hashedPassword]);
 
-        res.json({message: 'User successfully added', userId:result.id, userUsername:username});
+        res.json({message: 'User successfully added', user_id:result.id, userUsername:username});
     }
     catch(err){
         console.log('registration failed', err)
@@ -73,7 +73,7 @@ router.post('/signin',async (req,res) =>{
             return res.status(400).json({error:'Invalid Password'})
         } 
 
-        res.json({message:'Login Successful', userId: user.userID, userUsername:user.username});
+        res.json({message:'Login Successful', user_id: user.user_id, userUsername:user.username});
     }
     catch(err){
         console.log("Internal server error", err)
